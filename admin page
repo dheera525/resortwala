@@ -1,4 +1,6 @@
 import mysql.connector
+#from . import
+
 db = mysql.connector.connect(
     host="localhost",
     user="root",
@@ -9,25 +11,33 @@ if not db.is_connected():
 
 cursor = db.cursor()
 
-#to see what al resorts in part
-def seeall():
-    query="select*from resorts"
+def searchby(city):
+    query="select*from resorts where location="+city
     cursor.execute("use resorts")
     cursor.execute(query)
+
+def sortbyprice():
+    cursor.execute("use resorts")
+    cursor.execute("Select * from resorts order by price")
     print(cursor.fetchall())
 
-seeall()
-
-
-def addnewres():
-    resortname=input("Enter resort name")#search mein first three letter wala type banao
-    location=input("Enter city")#this should be sortable while searching
-    price=input("Enter Price per night")#this should be sortable while searching
-    descrip=input("Describe the resort")
-    facility=input("Faiclities available")#this should be sortable while searching
+def sortbyrating():
     cursor.execute("use resorts")
-    query = "Insert into resorts values('{}','{}',{},'{}','{}',{})".format(resortname , location, price, descrip,facility,4)
-    cursor.execute(query)
-    db.commit()
-addnewres()
-seeall()
+    cursor.execute("Select * from resorts order by rating")
+    print(cursor.fetchall())
+
+def seebookingsbyself(username):
+    cursor.execute("use bookings")
+    cursor.execute("Select * from bookings where username =",username)#username to be taken from members page
+    print(cursor.fetchall())
+
+def modifydate(resortgoingto):
+    resname=input("enter resort to be editted")
+    start=input("new arrival at resort (in DD-MM-YYYY format)")
+    end=input("new date of departure (in DD-MM-YYYY format)")
+    #s=cursor.execute("select start_date from bookings")
+    #e=cursor.execute("selec end_date from bookings")
+
+    cursor.execute("use resorts")
+    cursor.execute("update bookings set start_date=",start,"and end_date=",end,"where resort_name=",resname)
+    print(cursor.fetchall())
