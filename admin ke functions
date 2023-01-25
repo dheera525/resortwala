@@ -1,0 +1,33 @@
+import mysql.connector
+db = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="dpsbn")
+
+if not db.is_connected():
+    print("connection not established")
+
+cursor = db.cursor()
+
+#to see what al resorts in part
+def seeall():
+    query="select*from resorts"
+    cursor.execute("use resorts")
+    cursor.execute(query)
+    print(cursor.fetchall())
+
+seeall()
+
+
+def addnewres():
+    resortname=input("Enter resort name")#search mein first three letter wala type banao
+    location=input("Enter city")#this should be sortable while searching
+    price=input("Enter Price per night")#this should be sortable while searching
+    descrip=input("Describe the resort")
+    facility=input("Faiclities available")#this should be sortable while searching
+    cursor.execute("use resorts")
+    query = "Insert into resorts values('{}','{}',{},'{}','{}',{})".format(resortname , location, price, descrip,facility,4)
+    cursor.execute(query)
+    db.commit()
+addnewres()
+seeall()
