@@ -1,0 +1,47 @@
+import tkinter as tk
+import SQLFUNC as sql
+
+root = tk.Tk()
+root.title("User Sign-UP/IN")
+
+sql.mycur.execute("use resorts")
+
+USER_ID="username"
+PASS_ID="password"
+q="create table if not exists members ( "+USER_ID+" varchar(250) PRIMARY KEY, "+PASS_ID+" varchar(250) );"
+sql.mycur.execute(q)
+
+appLabel = tk.Label(root, text="Log in or Create a New Account", width=35)
+appLabel.config(font=("Courier", 20, "bold"))
+appLabel.grid(row=0, columnspan=2, padx=(10, 10), pady=(30, 0))
+
+username_label = tk.Label(root, text="Enter your username-", width=20, bg="PeachPuff3",
+                        font=("Courier", 15))
+username_label.grid(row=3, columnspan=1, padx=10, pady=10)
+
+password_label = tk.Label(root, text="Enter your password-", width=20, bg="PeachPuff3",
+                        font=("Courier", 15))
+password_label.grid(row=4, columnspan=1, padx=10, pady=10)
+
+username_input = tk.Entry(root, width=20)
+username_input.grid(row=3, column=1, padx=10, pady=10)
+a= username_input.get()
+
+password_input = tk.Entry(root, width=20)
+password_input.grid(row=4, column=1, padx=10, pady=10)
+b=password_input.get()
+
+class Student:
+    user=""
+    pass1=""
+    def __init__(self, user, pass1):
+        self.user = user
+        self.pass1 = pass1
+def takeInput():
+    query= "Insert into members values({},{})".format(a,b)
+    sql.mycur.execute(query)
+
+sumbit_button = tk.Button(root, text="Enter", bg="PeachPuff3", font=("Courier", 15), command=lambda: takeInput())
+sumbit_button.grid(pady=20)
+
+root.mainloop()
