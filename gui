@@ -40,8 +40,9 @@ def takeInput():
     global username_input,password_input
     username=username_input.get()
     pass1=password_input.get()
-    q = "insert into members values ('{}','{}')".format(username,pass1)
+    q = "insert into members values('{}','{}')".format(username,pass1)
     sql.mycur.execute(q)
+    sql.mycon.commit()
 
 sumbit_button = tk.Button(root, text="Enter", bg="PeachPuff3", font=("Courier", 15), command=takeInput)
 sumbit_button.grid(pady=20)
