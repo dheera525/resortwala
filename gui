@@ -1,3 +1,4 @@
+##the user login page
 import tkinter as tk
 import SQLFUNC as sql
 
@@ -25,11 +26,9 @@ password_label.grid(row=4, columnspan=1, padx=10, pady=10)
 
 username_input = tk.Entry(root, width=20)
 username_input.grid(row=3, column=1, padx=10, pady=10)
-a= username_input.get()
 
 password_input = tk.Entry(root, width=20)
 password_input.grid(row=4, column=1, padx=10, pady=10)
-b=password_input.get()
 
 class Student:
     user=""
@@ -38,10 +37,13 @@ class Student:
         self.user = user
         self.pass1 = pass1
 def takeInput():
-    query= "Insert into members values({},{})".format(a,b)
-    sql.mycur.execute(query)
+    global username_input,password_input
+    username=username_input.get()
+    pass1=password_input.get()
+    q = "insert into members values ('{}','{}')".format(username,pass1)
+    sql.mycur.execute(q)
 
-sumbit_button = tk.Button(root, text="Enter", bg="PeachPuff3", font=("Courier", 15), command=lambda: takeInput())
+sumbit_button = tk.Button(root, text="Enter", bg="PeachPuff3", font=("Courier", 15), command=takeInput)
 sumbit_button.grid(pady=20)
 
 root.mainloop()
