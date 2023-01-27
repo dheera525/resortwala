@@ -1,0 +1,43 @@
+root = tk.Tk()
+root.title("User Sign-UP/IN")
+sf.cursor.execute("use resortdb")
+
+frame = Frame(root)
+frame.pack(side="top", expand=True, fill="both")
+
+def clearFrame():
+    # destroy all widgets from frame
+    for widget in frame.winfo_children():
+        widget.destroy()
+
+    # this will clear frame and frame will be empty
+    # if you want to hide the empty panel then
+    frame.pack_forget()
+
+def userlogin():
+    username=input("Enter Username")
+    first=input("Enter firstname")
+    last=input("Enter last name")
+    password=input("Enter passs")
+    appLabel = tk.Label(frame, text="Login/Sign up", width=35)
+    appLabel.config(font=("Courier", 20, "bold"))
+    appLabel.grid(row=0, columnspan=2, padx=(10, 10), pady=(30, 0))
+    userlog_b = tk.Button(frame, text="Login", bg="PeachPuff3", font=("Courier", 15), command=clearFrame)
+    userlog_b.grid(row=1, column=1, padx=(0, 10,), pady=10)
+    usercreate_b = tk.Button(frame, text="create account", bg="PeachPuff3", font=("Courier", 15), command=member_Create(username,first,last,password))
+    usercreate_b.grid(row=1, column=2, padx=(0, 10,), pady=10)
+
+
+#_________________GUI___________________
+
+
+appLabel = tk.Label(frame, text="Welcome to Royal Resorts", width=35)
+appLabel.config(font=("Courier", 20, "bold"))
+appLabel.grid(row=0, columnspan=2, padx=(10, 10), pady=(30, 0))
+
+user_b = tk.Button(frame, text="User", bg="PeachPuff3", font=("Courier", 15), command=userlogin)
+user_b.grid(row=1,column=1, padx=(0,10,), pady=10)
+admin_b = tk.Button(frame, text="Admin", bg="PeachPuff3", font=("Courier", 15))
+admin_b.grid(row=1,column=2, padx=(0,10,), pady=10)
+
+root.mainloop()
